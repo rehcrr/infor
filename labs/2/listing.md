@@ -1,4 +1,4 @@
-'''
+```
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
@@ -399,4 +399,4 @@ a_pereverzev@185.5.249.140's password:
 Permission denied, please try again.
 a_pereverzev@185.5.249.140's password: 
 report.md      
-'''
+```
