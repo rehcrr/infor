@@ -11,7 +11,10 @@ void binary_8(int n, int bit) {
 int counter_bytes(int n) {
     int count = 2;
     int st = 2;
-    
+    if ((n >= 1073741823) || (n <= -1073741824)){
+        count = 32;
+        return count;
+    }
     while (n >= st){
         st = st * 2;
         count++;
