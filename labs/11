@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef enum _kState
+{
+ FIND,
+ Swaper,
+ Space
+} kState;
+
+int isSpace(char ch)
+{
+ if (ch != ' ') {
+  return 0;
+ }
+ else {
+  return 1;
+ }
+}
+
+int main(void)
+{
+ char ch;
+ kState state = FIND;
+ char array[1000] = {0}; // массив для хранения данных
+ int index = 0; // индекс для массива
+
+ while ((ch = getchar()) != EOF)
+ {
+  switch (state)
+  {
+  case FIND:
+  {
+   if (ch != '\n') {
+    array[index++] = ch; // сохраняем символ в массив
+   }
+   else state = Swaper;
+  }
+  break;
+
+  case Swaper:
+  {
+   array[index++] = ' '; // сохраняем пробел в массив
+   state = Space;
+  }
+  break;
+  case Space:
+  {
+   if (isSpace(ch) == 0) {
+       array[index++] = ch; // сохраняем символ в массив
+    state = FIND;
+   }
+   else {
+    state = Space;
+   }
+  }
+  break;
+  }
+ }
+
+ array[index] = '\0'; // добавляем символ конца строки в конец массива
+
+ printf("%s\n", array); // выводим сохраненные данные
+
+ return 0;
+}
