@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void printMatrix(int n, int matrix[n][n]) {
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int n;
+    printf("Введите размер матрицы: ");
+    scanf("%d", &n);
+
+    if(n < 1 || n > 9) {
+        printf("Неверный размер матрицы.\n");
+        return 1;
+    }
+
+    int matrix[n][n];
+
+    printf("Введите элементы матрицы:\n");
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    printf("Исходная матрица:\n");
+    printMatrix(n, matrix);
+
+    for(int i=0; i<n; i++) {
+        swap(&matrix[i][i], &matrix[i][n-i-1]);
+    }
+
+    printf("Матрица после замены элементов главной и побочной диагоналей:\n");
+    printMatrix(n, matrix);
+
+    return 0;
+}
