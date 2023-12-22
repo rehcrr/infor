@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stddef.h>
+#include <wctype.h>
+
+int separator(char s) {
+    char *m = " \t,\n";
+    for (int i = 0; i < 4; i++) {
+        if (s == m[i]) return 1;
+    }
+    return 0;
+}
+
+int main(void) {
+    const unsigned int lu = 1;
+    char *s = "aeiouy";
+    unsigned int vowels = 0;
+    for (int i = 0; i < 6; i++) {
+        vowels = vowels | lu << (s[i] - 'a');
+    }
+    unsigned int word = 0;
+    char chr;
+    int f = 0;
+    char word_str[1000] = {0}; // Буфер для хранения слова
+    int word_index = 0; // Индекс для буфера
+
+    // Массив для хранения всех слов, содержащих все гласные
+    char all_words[1000][1000];
+    int all_words_index = 0;
+
+    while ((chr = getchar()) != EOF) {
+        if (separator(chr) && word) {
+            vowels = vowels & word;
+            if (vowels == word) { // Если слово содержит все гласные буквы, выводим его
+                word_str[word_index] = '\0'; // Завершаем строку
+                // Сохраняем слово в массив
+                for(int i = 0; i < word_index; i++) {
+                    all_words[all_words_index][i] = word_str[i];
+                }
+                all_words_index++;
+            }
+            word = 0;
+            word_index = 0; // Сбрасываем индекс для нового слова
+        } else if (separator(chr) == 0) {
+            word = word | (lu << (towlower(chr) - 'a'));
+            word_str[word_index++] = chr; // Добавляем символ в буфер
+            f++;
+        }
+    }
+
+    // Выводим все слова, содержащие все гласные
+    for(int i = 0; i < all_words_index; i++) {
+        printf("%s\n", all_words[i]);
+    }
+
+    return 0;
+}
