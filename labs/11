@@ -3,62 +3,82 @@
 
 typedef enum _kState
 {
- FIND,
- Swaper,
- Space
+    FIND,
+    Swaper,
+    Space
 } kState;
 
 int isSpace(char ch)
 {
- if (ch != ' ') {
-  return 0;
- }
- else {
-  return 1;
- }
+    if (ch != ' ') {
+        return 0;
+    }
+    else {
+        return 1;
+    }
 }
 
 int main(void)
 {
- char ch;
- kState state = FIND;
- char array[1000] = {0}; // массив для хранения данных
- int index = 0; // индекс для массива
+    char ch;
+    kState state = FIND;
+    char array[1000] = {0}; 
+    int index = 0; 
+    int prevCharIsNewLine = 0;
 
- while ((ch = getchar()) != EOF)
- {
-  switch (state)
-  {
-  case FIND:
-  {
-   if (ch != '\n') {
-    array[index++] = ch; // сохраняем символ в массив
-   }
-   else state = Swaper;
-  }
-  break;
+    while ((ch = getchar()) != EOF)
+    {
+        switch (state)
+        {
+            case FIND:
+            {
+                if (ch != '\n') {
+                    array[index++] = ch; 
+                } else {
+                    if (!prevCharIsNewLine) {
+                        array[index++] = ch; 
+                    }
+                    prevCharIsNewLine = 1;
+                    state = Swaper;
+                }
+            }
+            break;
 
-  case Swaper:
-  {
-   array[index++] = ' '; // сохраняем пробел в массив
-   state = Space;
-  }
-  break;
-  case Space:
-  {
-   if (isSpace(ch) == 0) {
-       array[index++] = ch; // сохраняем символ в массив
-    state = FIND;
-   }
-   else {
-    state = Space;
-   }
-  }
-  break;
-  }
- }
+            case Swaper:
+            {
+                if (ch != '\n') {
+                    array[index++] = ' '; 
+                    prevCharIsNewLine = 0;
+                    state = Space;
+                }
+                else {
+                    array[index] = '\n'; 
+                    array[index++] = '\n'; 
+                    prevCharIsNewLine = 1;
+                    state = FIND;
+                }
+            }
+            break;
+            case Space:
+            {
+                if (isSpace(ch) == 0) {
+                    array[index++] = ch; 
+                    state = FIND;
+                }
+                else {
+                    state = Space;
+                }
+            }
+            break;
+        }
+    }
 
- array[index] = '\0'; // добавляем символ конца строки в конец массива
+    array[index] = '\0'; 
+
+    printf("%s\n", array); 
+
+    return 0;
+}
 
  printf("%s\n", array); // выводим сохраненные данные
 
