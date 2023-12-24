@@ -20,18 +20,17 @@ int main(void) {
     unsigned int word = 0;
     char chr;
     int f = 0;
-    char word_str[1000] = {0}; // Буфер для хранения слова
-    int word_index = 0; // Индекс для буфера
+    char word_str[1000] = {0}; 
+    int word_index = 0; 
 
-    // Массив для хранения всех слов, содержащих все гласные
     char all_words[1000][1000];
     int all_words_index = 0;
 
     while ((chr = getchar()) != EOF) {
         if (separator(chr) && word) {
             vowels = vowels & word;
-            if (vowels == word) { // Если слово содержит все гласные буквы, выводим его
-                word_str[word_index] = '\0'; // Завершаем строку
+            if (vowels == word) { 
+                word_str[word_index] = '\0'; 
                 // Сохраняем слово в массив
                 for(int i = 0; i < word_index; i++) {
                     all_words[all_words_index][i] = word_str[i];
@@ -39,15 +38,14 @@ int main(void) {
                 all_words_index++;
             }
             word = 0;
-            word_index = 0; // Сбрасываем индекс для нового слова
+            word_index = 0; 
         } else if (separator(chr) == 0) {
             word = word | (lu << (towlower(chr) - 'a'));
-            word_str[word_index++] = chr; // Добавляем символ в буфер
+            word_str[word_index++] = chr; 
             f++;
         }
     }
 
-    // Выводим все слова, содержащие все гласные
     for(int i = 0; i < all_words_index; i++) {
         printf("%s\n", all_words[i]);
     }
