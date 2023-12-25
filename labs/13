@@ -30,8 +30,7 @@ int main(void) {
     while ((chr = getchar()) != EOF) {
         if (separator(chr) && word) {
             if ((vowels & word) == vowels) { 
-                word_str[word_index] = '\0'; 
-                // Сохраняем слово в массив
+                word_str[word_index] = '\0';
                 for(int i = 0; i < word_index; i++) {
                     all_words[all_words_index][i] = word_str[i];
                 }
