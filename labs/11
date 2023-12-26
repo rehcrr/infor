@@ -8,79 +8,66 @@ typedef enum _kState
     Space
 } kState;
 
-int isSpace(char ch)
-{
-    if (ch != ' ') {
-        return 0;
-    }
-    else {
-        return 1;
-    }
-}
-
 int main(void)
 {
     char ch;
     kState state = FIND;
-    char array[1000] = {0}; 
-    int index = 0; 
-    int prevCharIsNewLine = 0;
+    char array[1000] = { 0 };
+    int index = 0;
+    char prev_ch = '\n';
 
     while ((ch = getchar()) != EOF)
     {
         switch (state)
         {
-            case FIND:
+        case FIND:
+        {
+            if (ch != '\n')
             {
-                if (ch != '\n') {
-                    array[index++] = ch; 
-                } else {
-                    if (!prevCharIsNewLine) {
-                        array[index++] = ch; 
-                    }
-                    prevCharIsNewLine = 1;
-                    state = Swaper;
-                }
+                array[index] = ch;
+                prev_ch = ch;
+                index++;
             }
-            break;
+            else {
+                array[index] = ' ';
+                prev_ch = ' ';
+                index++;
+                state = Swaper;
+            }
+        }
+        break;
 
-            case Swaper:
-            {
-                if (ch != '\n') {
-                    array[index++] = ' '; 
-                    prevCharIsNewLine = 0;
-                    state = Space;
-                }
-                else {
-                    array[index] = '\n'; 
-                    array[index++] = '\n'; 
-                    prevCharIsNewLine = 1;
-                    state = FIND;
-                }
+        case Swaper:
+        {
+            if (prev_ch == ' ' && ch == '\n') {
+                array[index] = '\n'; 
+                array[index - 1] = '\n'; 
+                prev_ch = '\n';
+                index += 1;
+                state = FIND;
             }
-            break;
-            case Space:
-            {
-                if (isSpace(ch) == 0) {
-                    array[index++] = ch; 
-                    state = FIND;
-                }
-                else {
-                    state = Space;
-                }
+            else if (prev_ch == '\n') {
+                array[index] = '\n';
+                prev_ch = '\n';
+                index++;
+                state = FIND;
             }
-            break;
+            else {
+                array[index] = ch;
+                prev_ch = ch;
+                index++;
+                state = FIND;
+
+            }
+
+        }
+        break;
         }
     }
 
-    array[index] = '\0'; 
+    array[index] = '\0';
 
-    printf("%s\n", array); 
+    printf("%s\n", array);
 
     return 0;
-}
-
- printf("%s\n", array); // выводим сохраненные данные
-
- return 0;
 }
