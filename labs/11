@@ -22,7 +22,7 @@ int main(void)
         {
         case FIND:
         {
-            if (ch != '\n')
+            if ((ch != '\n') || (prev_ch == '\n'))
             {
                 array[index] = ch;
                 prev_ch = ch;
